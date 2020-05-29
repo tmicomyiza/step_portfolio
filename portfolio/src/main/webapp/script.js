@@ -32,11 +32,16 @@ function addRandomFact() {
  * Display correct answers to the page
  */
 function Solutions(){
-    const correctAnswers = ['b', 'd', 'd','b'];
-    //var answerContainer; 
-    //add them to the page
-    //for (var i = 0; i < correctAnswers.length; i++){
-    const   answerContainer = document.getElementById('solution-container');
-    answerContainer.innerText = correctAnswers;
+    const correctAnswers = ["2", "8", "12", "16"];
+    var answerlable, answerradio;
+    //highlight solutions to the page
+    for (var i = 0; i < correctAnswers.length; i ++){
+        
+        answerlable = document.getElementById(correctAnswers[i]);
+        answerradio = document.getElementById("rad" + correctAnswers[i]);
+        
+        answerlable.style.color = "green";
+        answerradio.checked = true;
 
+    }
 }
