@@ -13,7 +13,7 @@
 // limitations under the License.
 
 /**
- * Adds a random greeting to the page.
+ * Adds a random fact to the page.
  */
 function addRandomFact() {
   const facts =
@@ -29,9 +29,108 @@ function addRandomFact() {
 }
 
 /**
- * direct to main page
+ * 
  */
 
-function gohome(){
-    
+(function (){
+    var quizContainer = document.getElementById('quiz');
+    //var resultsContainer = document.getElementById('results');
+    var submitButton = document.getElementById('submit');
+    const Questions = [
+        {
+            question: "what is true about me?",
+            answers: {
+                a: 'I am from Ghana',
+                b: 'I love to dance',
+                c: 'I am a good singer',
+                d: 'I have a cat'
+            },
+            correctAnswer: 'b'
+        },
+        {
+            question: "what is NOT true about me?",
+            answers: {
+                a: 'I am from Rwanda',
+                b: 'I love to paint',
+                c: 'I write poems',
+                d: 'I study applied mathematics'
+            },
+            correctAnswer: 'd'
+        },
+        {
+            question: "what is my least favorite genre of music",
+            answers: {
+                a: 'Afrobeat',
+                b: 'Hip Hop',
+                c: 'Dancehall',
+                d: 'Country',
+                e: 'House',
+                f: 'Jazz'
+            },
+            correctAnswer: 'e'
+        },
+    ];
+
+    DisplayQuestions(Questions, quizContainer);
+
+    //show results
+    submitButton.onclick = function (){
+        DisplayAnswers(quizContainer, questions)
+    }
+})();
+
+/**
+ * Adds questions to the page
+ */
+function DisplayQuestions(Quizcontainer, questions){
+    var outputs = [];
+    var answers;
+
+    for(Aquestion in questions){
+        answers = [];
+
+        for (option in Aquestion.answers){
+            
+            //add an html button
+            answers.push(
+            	'<label>'
+					+ '<input type="radio" name="question'+i+'" value="'+option+'">'
+					+ option + ': '
+					+ Aquestion.answers[option]
+				+ '</label>'
+			);
+	
+        }
+
+        // add the question to outputs
+        outputs.push(	'<div class="question">' + Aquestion.question + '</div>'
+			+ '<div class="answers">' + answers.join('') + '</div>'
+		);
+    }
+
+    // add quetions 
+    QuizContainer.innerHTML = outputs.join('');
 }
+
+/**
+ * Adds solutions to the page
+ */
+
+function DisplayAnswers(QuizContainer, questions){
+    var solutionContainer = QuizContainer.querySelectorAll('.answers');
+    
+    var userSelection = '';
+    
+    for(var i = 0; i < questions.length; i++){
+        userSelection = (solutionContainer[i].querySelector('input[name=quetion'+i+']:checked')||{}).value;
+
+        if(userSelection===questions[i].correctAnswer){
+            solutionContainer[i].style.color = 'lightgreen';
+        }
+        else{
+            solutionContainer[i].style.color = 'red';
+        }
+    }
+}
+
+
