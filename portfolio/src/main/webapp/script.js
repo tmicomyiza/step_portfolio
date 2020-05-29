@@ -27,3 +27,11 @@ function addRandomFact() {
   const factcontainer = document.getElementById('fact-container');
   factcontainer.innerText = fact;
 }
+
+/**
+ * direct to main page
+ */
+
+function gohome(){
+    
+}
