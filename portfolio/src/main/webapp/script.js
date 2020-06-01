@@ -13,7 +13,7 @@
 // limitations under the License.
 
 /**
- * Adds a random greeting to the page.
+ * Adds a random fact to the page.
  */
 function addRandomFact() {
   const facts =
@@ -29,9 +29,19 @@ function addRandomFact() {
 }
 
 /**
- * direct to main page
+ * Display correct answers to the page
  */
+function Solutions(){
+    const correctAnswers = ["2", "8", "12", "16"];
+    var answerlable, answerradio;
+    //highlight solutions to the page
+    for (var i = 0; i < correctAnswers.length; i ++){
+        
+        answerlable = document.getElementById(correctAnswers[i]);
+        answerradio = document.getElementById("rad" + correctAnswers[i]);
+        
+        answerlable.style.color = "green";
+        answerradio.checked = true;
 
-function gohome(){
-    
+    }
 }
