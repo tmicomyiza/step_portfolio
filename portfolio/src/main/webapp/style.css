@@ -7,12 +7,20 @@
 #fact-container {
   margin-top: 20px;
 }
+
+body{
+    background-color: lightgray;
+}
 .image-thumbnails {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
 
+.profile img{
+    max-width: 40%;
+    height: auto;
+}
 .image-thumbnails img {
   margin: 10px;
   max-height: 200px;
