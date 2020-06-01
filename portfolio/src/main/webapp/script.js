@@ -36,7 +36,6 @@ function Solutions(){
     var answerlable, answerradio;
     //highlight solutions to the page
     for (var i = 0; i < correctAnswers.length; i ++){
-        
         answerlable = document.getElementById(correctAnswers[i]);
         answerradio = document.getElementById("rad" + correctAnswers[i]);
         
@@ -44,4 +43,13 @@ function Solutions(){
         answerradio.checked = true;
 
     }
+}
+
+/**
+ * Fetches a message from the server
+ */
+async function randomFact(){
+    const response = await fetch('/data');
+    const message = await response.text();
+    document.getElementById('fact-container').innerText = message;
 }

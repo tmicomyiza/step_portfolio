@@ -19,14 +19,28 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+/** Servlet that returns a random fact*/
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
+  private List<String> facts;
+
+  @Override
+  public void init() {
+    facts = new ArrayList<>();
+    facts.add("black belt in Karate, JKA style");
+    facts.add("I love stargazing");
+    facts.add("I love to dance");
+    facts.add("I have a dog and her name is Violet");
+  }
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String fact = facts.get((int) (Math.random() * facts.size()));
     response.setContentType("text/html;");
-    response.getWriter().println("<h1>Hello Mico!</h1>");
+    response.getWriter().println(fact);
   }
 }
