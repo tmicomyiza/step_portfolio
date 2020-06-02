@@ -41,15 +41,36 @@ function Solutions(){
         
         answerlable.style.color = "green";
         answerradio.checked = true;
-
     }
 }
 
 /**
- * Fetches a message from the server
+ * Fetches a random fact from the server
  */
 async function randomFact(){
+    const response = await fetch('/fact');
+    const message = await response.text();
+    document.getElementById('fact-container').innerText = message;
+
+
+}
+
+/**
+ * Fetches comments from the server
+ */
+async function getComments(){
     const response = await fetch('/data');
     const message = await response.json();
-    document.getElementById('fact-container').innerText = message;
+    //document.getElementById('comment-container').innerText = message;
+    document.getElementById('comment-container').forEach((line) => {
+      historyEl.appendChild(createListElement(line));
+    })
+
+}
+
+/** Creates an <li> element containing text. */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
 }

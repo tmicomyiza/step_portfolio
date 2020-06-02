@@ -14,6 +14,7 @@
 
 package com.google.sps.servlets;
 
+import java.util.Arrays;
 import com.google.gson.Gson;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
@@ -27,26 +28,44 @@ import java.util.List;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private List<String> facts;
   private ArrayList<String> comments;
 
   @Override
   public void init() {
-    facts = new ArrayList<>();
-    facts.add("black belt in Karate, JKA style");
-    facts.add("I love stargazing");
-    facts.add("I love to dance");
-    facts.add("I have a dog and her name is Violet");
+    comments = new ArrayList<>();
   }
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     //String fact = facts.get((int) (Math.random() * facts.size()));
     Gson gson = new Gson();
-    String fact = gson.toJson(facts); 
+    String comment = gson.toJson(comments); 
     //response.setContentType("text/html;");
     response.setContentType("application/json;");
-    response.getWriter().println(fact);
+    response.getWriter().println(comment);
+  }
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    //get input from the form.
+    String text = getParameter(request, "text-input","");
+
+    //add input to the datastructure.
+    comments.add(text);
+
+    //respond with the result.
+    response.sendRedirect("/images.html");
+  }
+
+  /**
+   * @return the request parameter, or the default value if the parameter
+   *         was not specified by the client
+   */
+  private String getParameter(HttpServletRequest request, String name, String defaultValue) {
+    String value = request.getParameter(name);
+    if (value == null) {
+      return defaultValue;
+    }
+    return value;
   }
 }
 

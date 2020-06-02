@@ -11,6 +11,11 @@
 body{
     background-color: lightgray;
 }
+
+.comments {
+    background-color: lightblue;
+}
+
 .image-thumbnails {
   display: flex;
   flex-wrap: wrap;
