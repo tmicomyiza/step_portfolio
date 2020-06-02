@@ -50,6 +50,6 @@ function Solutions(){
  */
 async function randomFact(){
     const response = await fetch('/data');
-    const message = await response.text();
+    const message = await response.json();
     document.getElementById('fact-container').innerText = message;
 }
