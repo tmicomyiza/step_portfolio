@@ -12,21 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Adds a random fact to the page.
- */
-function addRandomFact() {
-  const facts =
-      ['I am black belt in Karate, JKA style', 'I love stargazing', 'I am big dancer',
-                                             'I have a dog and her name is Violet'];
-
-  // Pick a random greeting.
-  const fact = facts[Math.floor(Math.random() * facts.length)];
-
-  // Add it to the page.
-  const factcontainer = document.getElementById('fact-container');
-  factcontainer.innerText = fact;
-}
 
 /**
  * Display correct answers to the page
@@ -58,19 +43,37 @@ async function randomFact(){
 /**
  * Fetches comments from the server
  */
-async function getComments(){
-    const response = await fetch('/data');
-    const message = await response.json();
-    //document.getElementById('comment-container').innerText = message;
-    document.getElementById('comment-container').forEach((line) => {
-      historyEl.appendChild(createListElement(line));
-    })
+// async function getComments(){
+//     const response = await fetch('/data');
+//     const message = await response.json();
+//     document.getElementById('comment-container').innerText = message;
+// }
 
+// /** Creates an <li> element containing text. */
+// function createListElement(text) {
+//   const liElement = document.createElement('li');
+//   liElement.innerText = text;
+//   return liElement;
+// }
+
+/** Fetches tasks from the server and adds them to the DOM. */
+function getComments() {
+  fetch('/data').then(response => response.json()).then((comments) => {
+    const commentListElement = document.getElementById('comment-container');
+    comments.forEach((comment) => {
+      commentListElement.appendChild(createCommentElement(comment));
+    })
+  });
 }
 
-/** Creates an <li> element containing text. */
-function createListElement(text) {
-  const liElement = document.createElement('li');
-  liElement.innerText = text;
-  return liElement;
+/** Creates an element that represents a task, including its delete button. */
+function createCommentElement(comment) {
+  const commentElement = document.createElement('li');
+  commentElement.className = 'Comment';
+
+  const textElement = document.createElement('span');
+  textElement.innerText = comment;
+
+  commentElement.appendChild(textElement);
+  return commentElement;
 }

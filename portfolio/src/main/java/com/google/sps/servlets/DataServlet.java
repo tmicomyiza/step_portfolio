@@ -14,6 +14,12 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 import java.util.Arrays;
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -28,21 +34,28 @@ import java.util.List;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private ArrayList<String> comments;
-
-  @Override
-  public void init() {
-    comments = new ArrayList<>();
-  }
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     //String fact = facts.get((int) (Math.random() * facts.size()));
-    Gson gson = new Gson();
-    String comment = gson.toJson(comments); 
+    //Gson gson = new Gson();
+    //String comment = gson.toJson(comments); 
     //response.setContentType("text/html;");
+    Query query = new Query("Comment");
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    PreparedQuery results = datastore.prepare(query);
+
+    List<String> comments = new ArrayList<>();
+    for (Entity entity : results.asIterable()) {
+      String text = (String) entity.getProperty("text");
+
+      comments.add(text);
+    }
+
+    Gson gson = new Gson();
     response.setContentType("application/json;");
-    response.getWriter().println(comment);
+    response.getWriter().println(gson.toJson(comments));
   }
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -50,7 +63,12 @@ public class DataServlet extends HttpServlet {
     String text = getParameter(request, "text-input","");
 
     //add input to the datastructure.
-    comments.add(text);
+    //comments.add(text);
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("text", text);
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(commentEntity);
 
     //respond with the result.
     response.sendRedirect("/images.html");
