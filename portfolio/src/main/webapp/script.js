@@ -40,23 +40,7 @@ async function randomFact(){
 
 }
 
-/**
- * Fetches comments from the server
- */
-// async function getComments(){
-//     const response = await fetch('/data');
-//     const message = await response.json();
-//     document.getElementById('comment-container').innerText = message;
-// }
-
-// /** Creates an <li> element containing text. */
-// function createListElement(text) {
-//   const liElement = document.createElement('li');
-//   liElement.innerText = text;
-//   return liElement;
-// }
-
-/** Fetches tasks from the server and adds them to the DOM. */
+/** Fetches comments from the server and adds them to the DOM. */
 function getComments() {
   fetch('/data').then(response => response.json()).then((comments) => {
     const commentListElement = document.getElementById('comment-container');
@@ -66,7 +50,7 @@ function getComments() {
   });
 }
 
-/** Creates an element that represents a task, including its delete button. */
+/** Creates an element that represents a comment*/
 function createCommentElement(comment) {
   const commentElement = document.createElement('li');
   commentElement.className = 'Comment';
