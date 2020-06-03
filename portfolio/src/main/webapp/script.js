@@ -32,7 +32,7 @@ function Solutions(){
 /**
  * Fetches a random fact from the server
  */
-async function randomFact(){
+async function getRandomFact(){
     const response = await fetch('/fact');
     const message = await response.text();
     document.getElementById('fact-container').innerText = message;
@@ -40,9 +40,13 @@ async function randomFact(){
 
 }
 
-/** Fetches comments from the server and adds them to the DOM. */
+/** 
+ * Fetches comments from the server and adds them to the DOM. 
+ */
 function getComments() {
-  fetch('/data').then(response => response.json()).then((comments) => {
+  fetch('/data')
+  .then(response => response.json())
+  .then((comments) => {
     const commentListElement = document.getElementById('comment-container');
     comments.forEach((comment) => {
       commentListElement.appendChild(createCommentElement(comment));
@@ -50,7 +54,9 @@ function getComments() {
   });
 }
 
-/** Creates an element that represents a comment*/
+/** 
+ * Creates an element that represents a comment
+ */
 function createCommentElement(comment) {
   const commentElement = document.createElement('li');
   commentElement.className = 'Comment';

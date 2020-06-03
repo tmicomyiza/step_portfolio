@@ -22,7 +22,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Servlet that returns a random fact*/
+/** 
+ * Servlet that returns a random fact.
+ */
 @WebServlet("/fact")
 public class FactServlet extends HttpServlet {
 
@@ -39,9 +41,9 @@ public class FactServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String fact = facts.get((int) (Math.random() * facts.size()));
+    String randomFact = facts.get((int) (Math.random() * facts.size()));
     response.setContentType("text/html;");
-    response.getWriter().println(fact);
+    response.getWriter().println(randomFact);
   }
 }
 

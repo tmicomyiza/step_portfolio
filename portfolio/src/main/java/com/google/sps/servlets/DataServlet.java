@@ -31,10 +31,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Servlet that returns a random fact*/
+/** 
+ * Servlet that returns a random fact.
+ */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
+  private int MaxComments;
+  private int UserChoice;
+  
+  @Override
+  public void init() {
+      MaxComments = 50;
+      UserChoice = 1;
+  }
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -45,8 +55,15 @@ public class DataServlet extends HttpServlet {
 
     List<String> comments = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
-      String text = (String) entity.getProperty("text");
-      comments.add(text);
+      
+      if (UserChoice > 0){
+        String text = (String) entity.getProperty("text");
+        comments.add(text);
+      }
+      else{
+        break;
+      }
+      UserChoice --;
     }
 
     Gson gson = new Gson();
@@ -57,23 +74,28 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    //get input from the form.
+    // get input from the form.
     String text = getParameter(request, "text-input","");
 
-    Entity commentEntity = new Entity("Comment");
-    commentEntity.setProperty("text", text);
+    // Get number of comments user wants to see.
+    UserChoice = getUserChoice(request);
 
-    // store the input to datastore
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    datastore.put(commentEntity);
+    if (!text.isEmpty()){
+      Entity commentEntity = new Entity("Comment");
+      commentEntity.setProperty("text", text);
 
-    //respond with the result.
+      // store the input to datastore.
+      DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+      datastore.put(commentEntity);
+    }
+
+    // respond with the result.
     response.sendRedirect("/images.html");
   }
 
   /**
    * @return the request parameter, or the default value if the parameter
-   *         was not specified by the client
+   *         was not specified by the client.
    */
   private String getParameter(HttpServletRequest request, String name, String defaultValue) {
     String value = request.getParameter(name);
@@ -82,5 +104,37 @@ public class DataServlet extends HttpServlet {
     }
     return value;
   }
+
+  /** 
+   * Returns the choice entered by the user, or -1 if the choice was invalid. 
+   */
+  private int getUserChoice(HttpServletRequest request) {
+    // Get the input from the form.
+    String UserChoiceString = getParameter(request, "user-choice","");
+
+    if (UserChoiceString.isEmpty()){
+        System.err.println("Could not convert empty string ");
+    }
+
+    // Convert the input to an int.
+    int UserChoice;
+    try {
+      UserChoice = Integer.parseInt(UserChoiceString);
+    } catch (NumberFormatException e) {
+      System.err.println("Could not convert to int: " + UserChoiceString);
+      return -1;
+    }
+
+    // Check that the input is between 1 and 50.
+    if (UserChoice < 1 || UserChoice > MaxComments ) {
+      System.err.println("User choice is out of range: " + UserChoiceString);
+      return -1;
+    }
+
+    return UserChoice;
+  }
 }
+
+
+
 
