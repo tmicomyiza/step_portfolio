@@ -49,14 +49,17 @@
       <div class="comments">
         <h4>Comments</h4> 
         <form action="/data" method="POST">
-          <p>What's your favorite painting from the Gallery above? and why?</p>        
-          <textarea name="text-input"></textarea>
-          <br/>
           <h5>How many comments you want to see?</h5>
           <input type="number" name="user-choice" min="1" max="50" value="10">
           <br/><br/>
           <input type="submit" />
-          <ul id="comment-container"></ul>
+        </form>
+        <ul id="comment-container"></ul>
+        <form action="/data" method="POST">
+          <p>What's your favorite painting from the Gallery above? and why?</p>        
+          <textarea name="text-input"></textarea>
+          <br/><br/>
+          <button>Post comment</button>
         </form>
       </div>
     </div>

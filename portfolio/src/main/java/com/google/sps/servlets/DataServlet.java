@@ -43,7 +43,7 @@ public class DataServlet extends HttpServlet {
   @Override
   public void init() {
       MaxComments = 50;
-      UserChoice = 1;
+      UserChoice = 10;
   }
 
   @Override
@@ -54,16 +54,17 @@ public class DataServlet extends HttpServlet {
     PreparedQuery results = datastore.prepare(query);
 
     List<String> comments = new ArrayList<>();
+    int count = UserChoice;
     for (Entity entity : results.asIterable()) {
       
-      if (UserChoice > 0){
+      if (count > 0){
         String text = (String) entity.getProperty("text");
         comments.add(text);
       }
       else{
         break;
       }
-      UserChoice --;
+      count --;
     }
 
     Gson gson = new Gson();
@@ -113,25 +114,26 @@ public class DataServlet extends HttpServlet {
     String UserChoiceString = getParameter(request, "user-choice","");
 
     if (UserChoiceString.isEmpty()){
-        System.err.println("Could not convert empty string ");
+      System.err.println("Edge case lolololllll " + UserChoice);
+      return UserChoice;
     }
 
     // Convert the input to an int.
-    int UserChoice;
+    int InputUserChoice;
     try {
-      UserChoice = Integer.parseInt(UserChoiceString);
+      InputUserChoice = Integer.parseInt(UserChoiceString);
     } catch (NumberFormatException e) {
       System.err.println("Could not convert to int: " + UserChoiceString);
       return -1;
     }
 
     // Check that the input is between 1 and 50.
-    if (UserChoice < 1 || UserChoice > MaxComments ) {
+    if (InputUserChoice < 1 || InputUserChoice > MaxComments ) {
       System.err.println("User choice is out of range: " + UserChoiceString);
       return -1;
     }
 
-    return UserChoice;
+    return InputUserChoice;
   }
 }
 
