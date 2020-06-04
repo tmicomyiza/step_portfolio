@@ -37,28 +37,30 @@ import java.util.List;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private int MaxComments;
-  private int UserChoice;
+  private int maxComments;
+  private int userChoice;
+  public static String propertyKey = "text";
+  public static String entityKey = "Comment";
   
   @Override
   public void init() {
-    MaxComments = 50;
-    UserChoice = 10;
+    maxComments = 50;
+    userChoice = 10;
   }
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Comment");
+    Query query = new Query(entityKey);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
     List<String> comments = new ArrayList<>();
-    int count = UserChoice;
+    int count = userChoice;
     for (Entity entity : results.asIterable()) {
       
       if (count > 0){
-        String text = (String) entity.getProperty("text");
+        String text = (String) entity.getProperty(propertyKey);
         comments.add(text);
       }
       else{
@@ -79,11 +81,11 @@ public class DataServlet extends HttpServlet {
     String text = getParameter(request, "text-input","");
 
     // Get number of comments user wants to see.
-    UserChoice = getUserChoice(request);
+    userChoice = getUserChoice(request);
 
     if (!text.isEmpty()){
-      Entity commentEntity = new Entity("Comment");
-      commentEntity.setProperty("text", text);
+      Entity commentEntity = new Entity(entityKey);
+      commentEntity.setProperty(propertyKey, text);
 
       // store the input to datastore.
       DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -111,33 +113,28 @@ public class DataServlet extends HttpServlet {
    */
   private int getUserChoice(HttpServletRequest request) {
     // Get the input from the form.
-    String UserChoiceString = getParameter(request, "user-choice","");
+    String userChoiceString = getParameter(request, "user-choice", "");
 
     // if the user doesn't provide number of comments they want to see,
-    //  we use the default value that is stored in UserChoice attribute.
-    if (UserChoiceString.isEmpty()){
-      return UserChoice;
+    // we use the default value that is stored in UserChoice attribute.
+    if (userChoiceString.isEmpty()){
+      return userChoice;
     }
 
     // Convert the input to an int.
-    int InputUserChoice;
+    int inputUserChoice;
     try {
-      InputUserChoice = Integer.parseInt(UserChoiceString);
+      inputUserChoice = Integer.parseInt(userChoiceString);
     } catch (NumberFormatException e) {
-      System.err.println("Could not convert to int: " + UserChoiceString);
+      System.err.println("Could not convert to int: " + userChoiceString);
       return -1;
     }
 
     // Check that the input is between 1 and 50.
-    if (InputUserChoice < 1 || InputUserChoice > MaxComments ) {
-      System.err.println("User choice is out of range: " + UserChoiceString);
+    if (inputUserChoice < 1 || inputUserChoice > maxComments ) {
+      System.err.println("User choice is out of range: " + userChoiceString);
       return -1;
     }
-
-    return InputUserChoice;
+    return inputUserChoice;
   }
 }
-
-
-
-

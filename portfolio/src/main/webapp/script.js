@@ -14,13 +14,13 @@
 
 
 /**
- * Display correct answers to the page
+ * Display correct answers to the page.
  */
 function Solutions(){
   const correctAnswers = ["2", "8", "12", "16"];
   var answerlable, answerradio;
   
-  //highlight solutions to the page
+  // highlight solutions to the page.
   for (var i = 0; i < correctAnswers.length; i ++){
     answerlable = document.getElementById(correctAnswers[i]);
     answerradio = document.getElementById("rad" + correctAnswers[i]);
@@ -31,7 +31,7 @@ function Solutions(){
 }
 
 /**
- * Fetches a random fact from the server
+ * Fetches a random fact from the server.
  */
 async function getRandomFact(){
   const response = await fetch('/fact');
@@ -54,7 +54,7 @@ function loadComments() {
 }
 
 /** 
- * Creates an element that represents a comment
+ * Creates an element that represents a comment.
  */
 function createCommentElement(comment) {
   const commentElement = document.createElement('li');
