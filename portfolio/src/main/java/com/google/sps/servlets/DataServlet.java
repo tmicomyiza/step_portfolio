@@ -42,8 +42,8 @@ public class DataServlet extends HttpServlet {
   
   @Override
   public void init() {
-      MaxComments = 50;
-      UserChoice = 10;
+    MaxComments = 50;
+    UserChoice = 10;
   }
 
   @Override
@@ -113,8 +113,9 @@ public class DataServlet extends HttpServlet {
     // Get the input from the form.
     String UserChoiceString = getParameter(request, "user-choice","");
 
+    // if the user doesn't provide number of comments they want to see,
+    //  we use the default value that is stored in UserChoice attribute.
     if (UserChoiceString.isEmpty()){
-      System.err.println("Edge case lolololllll " + UserChoice);
       return UserChoice;
     }
 
