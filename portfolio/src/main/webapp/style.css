@@ -1,7 +1,15 @@
 #content {
   margin-left: auto;
   margin-right: auto;
-  width: 650px;
+  width: 750px;
+  background-color: lightgray; 
+}
+
+#content-container {
+  margin-left: auto;
+  margin-right: auto;
+  width: 850px;
+  background-color: lightgray; 
 }
 
 #fact-container {
@@ -9,7 +17,7 @@
 }
 
 body{
-    background-color: lightgray;
+    background-color: gray;
 }
 
 .comments {
