@@ -74,11 +74,10 @@ public class DataServlet extends HttpServlet {
     response.getWriter().println(gson.toJson(comments));
   }
 
-
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // get input from the form.
-    String text = getParameter(request, "text-input","");
+    String text = getParameter(request, "text-input", "");
 
     // Get number of comments user wants to see.
     userChoice = getUserChoice(request);
