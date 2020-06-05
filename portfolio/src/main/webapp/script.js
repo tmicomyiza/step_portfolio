@@ -12,36 +12,57 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
 /**
- * Adds a random fact to the page.
+ * Display correct answers to the page.
  */
-function addRandomFact() {
-  const facts =
-      ['I am black belt in Karate, JKA style', 'I love stargazing', 'I am big dancer',
-                                             'I have a dog and her name is Violet'];
-
-  // Pick a random greeting.
-  const fact = facts[Math.floor(Math.random() * facts.length)];
-
-  // Add it to the page.
-  const factcontainer = document.getElementById('fact-container');
-  factcontainer.innerText = fact;
+function showSolutions(){
+  const correctAnswers = ["2", "8", "12", "16"];
+  var answerlable, answerradio;
+  
+  // highlight solutions to the page.
+  for (var i = 0; i < correctAnswers.length; i ++){
+    answerlable = document.getElementById(correctAnswers[i]);
+    answerradio = document.getElementById("rad" + correctAnswers[i]);
+    
+    answerlable.style.color = "green";
+    answerradio.checked = true;
+  }
 }
 
 /**
- * Display correct answers to the page
+ * Fetches a random fact from the server.
  */
-function Solutions(){
-    const correctAnswers = ["2", "8", "12", "16"];
-    var answerlable, answerradio;
-    //highlight solutions to the page
-    for (var i = 0; i < correctAnswers.length; i ++){
-        
-        answerlable = document.getElementById(correctAnswers[i]);
-        answerradio = document.getElementById("rad" + correctAnswers[i]);
-        
-        answerlable.style.color = "green";
-        answerradio.checked = true;
+async function getRandomFact(){
+  const response = await fetch('/fact');
+  const message = await response.text();
+  document.getElementById('fact-container').innerText = message;
+}
 
-    }
+/** 
+ * Fetches comments from the server and adds them to the DOM. 
+ */
+function loadComments() {
+  fetch('/data')
+  .then(response => response.json())
+  .then((comments) => {
+    const commentListElement = document.getElementById('comment-container');
+    comments.forEach((comment) => {
+      commentListElement.appendChild(createCommentElement(comment));
+    })
+  });
+}
+
+/** 
+ * Creates an element that represents a comment.
+ */
+function createCommentElement(comment) {
+  const commentElement = document.createElement('li');
+  commentElement.className = 'Comment';
+
+  const textElement = document.createElement('span');
+  textElement.innerText = comment;
+
+  commentElement.appendChild(textElement);
+  return commentElement;
 }

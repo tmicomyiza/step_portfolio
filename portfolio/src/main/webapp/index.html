@@ -7,73 +7,71 @@
     <script src="script.js"></script>
   </head>
   <body>
-
-    <div id="content">
+    <div id="content-container">
       <div class="topnav">
         <a class="active" href="index.html">Home</a>
         <a href="images.html">Gallery</a>
         <a href="quiz.html">Quiz about me</a>
       </div>
-      <h1>My Portfolio</h1>
-      <img src="images/Profile.png"/>
-      <h2>Introduction.</h2>
-      <p>My name is Mico. I'm a rising junior at Tufts university, double 
-                        majoring in Computer Science and Mathematics. </p>
-      
-      <h2>Background</h2>
-      <p>I was born and grew in Kigali, Rwanda, East Africa. I have big a sister and
-          a young brother. </p>
-      
-      <p>Click here to get a random fact about me:</p>
-      <button onclick="addRandomFact()">Get to know me</button>
-      <div id="fact-container"></div>
-      <h2>Experience</h2>
-      <ul>
-          <li>Google,STEP Intern, Summer 2020</li>
-          <li>Microsoft, The New Technologist, Intern, Summer 2019</li>
-          <li>Tufts Technology Services,The IT Network Support Associate intern,
-               Fall 2019</li>
-          <li>SolarSPELL@ASU,Technology Intern, Summer 2018</li>
-          <li>CharisUAS,Drone Pilot, Fall 2016 - Spring 2017</li>
-
-      </ul>
-
-      <h2>Projects</h2>
-      <ul>
-          <li>Sudoku Solver. Implemented a back tracking search algorithm to solve
-               sudoku using Constraints Satisfaction Problems technique. 
-                <a href="https://github.com/tmicomyiza/Sudoku-Solver-CSP"> link</a>
-          </li> 
-          <li>Artificial Neural Network. Used a back-propagation algorithm that
-                classifies three types of plants.
-                <a href="https://github.com/tmicomyiza/Neural_Network">link</a>
-          </li>
-          <li>an iOS card dealing game between a player and computer.
-              <a href="https://github.com/tmicomyiza/Card_Game">link</a>
-          </li>
-          <li> Incident-alarm. It provides user the option to analyze a live stream of network
-               packets or a set of PCAPs for incidents. This program analyzes
-                the following incidents: NULL scan, FIN scan, Xmas scan, Nikto scan,
-                and Remote Desktop Protocol (RDP) scan.
-              <a href="https://github.com/tmicomyiza/The-Incident-Alarm">link</a>
-          </li>
-          <li>Knapsack problem solver using local search technique known as Genetic Algorithm.
-              <a href="https://github.com/tmicomyiza/Knapsack_problem">link</a>
-          </li>
+      <div id="content">
+        <h1>My Portfolio</h1>
+        <div class="profile">
+          <a href="images/Profile.png"><img src="images/Profile.png"/></a>
+        </div>
+        <h2>Introduction.</h2>
+        <p>My name is Mico. I'm a rising junior at Tufts university, double 
+                          majoring in Computer Science and Mathematics. </p>
+        <h2>Background</h2>
+        <p>I was born and grew in Kigali, Rwanda, East Africa. I have big a sister and
+            a young brother. </p>
+        <p>Click here to get a random fact about me:</p>
+        <button onclick="getRandomFact()">Get to know me</button>
+        <div id="fact-container"></div>
+        <h2>Experience</h2>
+        <ul>
+            <li>Google,STEP Intern, Summer 2020</li>
+            <li>Microsoft, The New Technologist, Intern, Summer 2019</li>
+            <li>Tufts Technology Services,The IT Network Support Associate intern,
+                Fall 2019</li>
+            <li>SolarSPELL@ASU,Technology Intern, Summer 2018</li>
+            <li>CharisUAS,Drone Pilot, Fall 2016 - Spring 2017</li>
         </ul>
-
-      <h2>Profile</h2>
-      <ul>
-          <li>
-              <a href="https://www.linkedin.com/in/theogene-micomyiza-536020144">LinkedIn Profile</a>
-          </li>
-          <li>
-              <a href="https://github.com/tmicomyiza">GitHub Profile</a>
-          </li>
-          <li>
-              <a href="https://themicomyiza.com">Official website</a>
-          </li>
-      </ul>   
+        <h2>Projects</h2>
+        <ul>
+            <li>Sudoku Solver. Implemented a back tracking search algorithm to solve
+                sudoku using Constraints Satisfaction Problems technique. 
+                  <a href="https://github.com/tmicomyiza/Sudoku-Solver-CSP"> link</a>
+            </li> 
+            <li>Artificial Neural Network. Used a back-propagation algorithm that
+                  classifies three types of plants.
+                  <a href="https://github.com/tmicomyiza/Neural_Network">link</a>
+            </li>
+            <li>an iOS card dealing game between a player and computer.
+                <a href="https://github.com/tmicomyiza/Card_Game">link</a>
+            </li>
+            <li> Incident-alarm. It provides user the option to analyze a live stream of network
+                packets or a set of PCAPs for incidents. This program analyzes
+                  the following incidents: NULL scan, FIN scan, Xmas scan, Nikto scan,
+                  and Remote Desktop Protocol (RDP) scan.
+                <a href="https://github.com/tmicomyiza/The-Incident-Alarm">link</a>
+            </li>
+            <li>Knapsack problem solver using local search technique known as Genetic Algorithm.
+                <a href="https://github.com/tmicomyiza/Knapsack_problem">link</a>
+            </li>
+          </ul>
+        <h2>Profile</h2>
+        <ul>
+            <li>
+                <a href="https://www.linkedin.com/in/theogene-micomyiza-536020144">LinkedIn Profile</a>
+            </li>
+            <li>
+                <a href="https://github.com/tmicomyiza">GitHub Profile</a>
+            </li>
+            <li>
+                <a href="https://themicomyiza.com">Official website</a>
+            </li>
+        </ul><br/><br/>
+      </div>
     </div>
   </body>
 </html>

@@ -6,45 +6,67 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body>
-    <div id="content">
+  <body onload="loadComments()">
+    <div id="content-container">
       <div class="topnav">
         <a class="active" href="index.html">Home</a>
         <a href="images.html">Gallery</a>
         <a href="quiz.html">Quiz about me</a>
       </div>
-      <h1>Mico's Image Gallery</h1>
-      <div class="image-thumbnails">
-        <a href="images/astronomy-painting.jpg"><img src="images/astronomy-painting.jpg"/></a>
-        <a href="images/love-painting.jpg"><img src="images/love-painting.jpg"/></a>
-        <a href="images/fruit-painting.jpg"><img src="images/fruit-painting.jpg"/></a>
-      </div>
-      <h3>“On Canvas”</h3>
-      <p>
-        I become a part of everything I create, and
-        <br>Everything I create becomes a part of me.
-      </p>
-      <p>
-        When I cannot identify myself through words
-        <br>I always have to put my ideas down on canvas.
-        <br>Anyone can speak words that will be forgotten but
-        <br>I cannot forget how I feel when seeing my paintings.
-      </p>
-      <p>
-        When I do use words, their core pours out over my pieces
-        <br>where the deepest of meanings can tell a story from only one word.
-      </p>
-      <p>
-        A title,
-        <br>as important as the shade of color I create,
-        <br>type of brush I use,
-        <br>and rhythm I feel when I paint,
-        <br>an identifier as important as choosing to follow my passion
-      </p>
+      <div id="content">
+        <h1>Mico's Image Gallery</h1>
+        <div class="image-thumbnails">
+          <a href="images/astronomy-painting.jpg"><img src="images/astronomy-painting.jpg"/></a>
+          <a href="images/love-painting.jpg"><img src="images/love-painting.jpg"/></a>
+          <a href="images/fruit-painting.jpg"><img src="images/fruit-painting.jpg"/></a>
+        </div>
+        <h3>“On Canvas”</h3>
+        <p>
+          I become a part of everything I create, and
+          <br>Everything I create becomes a part of me.
+        </p>
+        <p>
+          When I cannot identify myself through words
+          <br>I always have to put my ideas down on canvas.
+          <br>Anyone can speak words that will be forgotten but
+          <br>I cannot forget how I feel when seeing my paintings.
+        </p>
+        <p>
+          When I do use words, their core pours out over my pieces
+          <br>where the deepest of meanings can tell a story from only one word.
+        </p>
+        <p>
+          A title,
+          <br>as important as the shade of color I create,
+          <br>type of brush I use,
+          <br>and rhythm I feel when I paint,
+          <br>an identifier as important as choosing to follow my passion
+        </p>
 
-      <h4>Note:</h4>
-      <p>I wrote this poem to express my love for painting as art form.
-           More importantly, I explain why I give a title to every painting I create.</p>
-    </div>
+        <h4>Note:</h4>
+        <p>I wrote this poem to express my love for painting as art form.
+              More importantly, I explain why I give a title to every painting I create.
+        </p>
+        <hr noshade>
+        <div class="comments">
+          <h4>Comments</h4> 
+          <!-- load comments -->
+          <form action="/data" method="POST">
+            <h5>How many comments you want to see?</h5>
+            <input type="number" name="user-choice" min="1" max="50" value="10">
+            <br/><br/>
+            <button>load comments</button>
+          </form>
+          <ul id="comment-container"></ul>
+          <!-- post comments -->
+          <form action="/data" method="POST">
+            <p><strong> What's your favorite painting from the Gallery above? and why?</strong></p>        
+            <textarea name="text-input"></textarea>
+            <br/><br/>
+            <button>Post comment</button>
+          </form><br/><br/>
+        </div>
+      </div><br/><br/>
+    </div><br/><br/>
   </body>
 </html>
