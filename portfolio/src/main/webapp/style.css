@@ -16,12 +16,12 @@
   margin-top: 20px;
 }
 
-body{
-    background-color: gray;
+body {
+  background-color: gray;
 }
 
 .comments {
-    background-color: lightblue;
+  background-color: lightblue;
 }
 
 .image-thumbnails {
@@ -31,8 +31,8 @@ body{
 }
 
 .profile img{
-    max-width: 40%;
-    height: auto;
+  max-width: 40%;
+  height: auto;
 }
 .image-thumbnails img {
   margin: 10px;

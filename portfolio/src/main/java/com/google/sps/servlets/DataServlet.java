@@ -58,12 +58,10 @@ public class DataServlet extends HttpServlet {
     List<String> comments = new ArrayList<>();
     int count = userChoice;
     for (Entity entity : results.asIterable()) {
-      
-      if (count > 0){
+      if (count > 0) {
         String text = (String) entity.getProperty(propertyKey);
         comments.add(text);
-      }
-      else{
+      }else{
         break;
       }
       count --;
@@ -76,7 +74,7 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // get input from the form.
+    // Get input from the form.
     String text = getParameter(request, "text-input", "");
 
     // Get number of comments user wants to see.
@@ -86,25 +84,22 @@ public class DataServlet extends HttpServlet {
       Entity commentEntity = new Entity(entityKey);
       commentEntity.setProperty(propertyKey, text);
 
-      // store the input to datastore.
+      // Store the input to datastore.
       DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
       datastore.put(commentEntity);
     }
 
-    // respond with the result.
+    // Respond with the result.
     response.sendRedirect("/images.html");
   }
 
   /**
-   * @return the request parameter, or the default value if the parameter
+   * @return The request parameter, or the default value if the parameter
    *         was not specified by the client.
    */
   private String getParameter(HttpServletRequest request, String name, String defaultValue) {
     String value = request.getParameter(name);
-    if (value == null) {
-      return defaultValue;
-    }
-    return value;
+    return (value == null)? defaultValue : value;
   }
 
   /** 
@@ -114,8 +109,8 @@ public class DataServlet extends HttpServlet {
     // Get the input from the form.
     String userChoiceString = getParameter(request, "user-choice", "");
 
-    // if the user doesn't provide number of comments they want to see,
-    // we use the default value that is stored in UserChoice attribute.
+    // If the user doesn't provide number of comments they want to see,
+    // We use the default value that is stored in UserChoice attribute.
     if (userChoiceString.isEmpty()){
       return userChoice;
     }

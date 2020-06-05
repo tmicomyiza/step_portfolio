@@ -16,7 +16,7 @@
 /**
  * Display correct answers to the page.
  */
-function Solutions(){
+function showSolutions(){
   const correctAnswers = ["2", "8", "12", "16"];
   var answerlable, answerradio;
   
