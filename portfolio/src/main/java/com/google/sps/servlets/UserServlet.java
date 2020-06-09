@@ -42,5 +42,5 @@ public class UserServlet extends HttpServlet {
       String loginUrl = userService.createLoginURL("/login");
       response.getWriter().println("<p>Login <a href=\"" + loginUrl + "\">here</a> in order to post a comment.</p>");
     }
-	}
+  }
 }

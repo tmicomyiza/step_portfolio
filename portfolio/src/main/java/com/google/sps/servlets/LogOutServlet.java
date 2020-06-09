@@ -35,10 +35,10 @@ public class LogOutServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("text/html");
 
-		UserService userService = UserServiceFactory.getUserService();
-		String urlToRedirectToAfterUserLogsOut = "/images.html";
+    UserService userService = UserServiceFactory.getUserService();
+    String urlToRedirectToAfterUserLogsOut = "/images.html";
     String logoutUrl = userService.createLogoutURL(urlToRedirectToAfterUserLogsOut);
 
     response.getWriter().println("<p>Logout <a href=\"" + logoutUrl + "\">here</a>.</p>");
-	}
+  }
 }
