@@ -72,8 +72,8 @@ function createCommentElement(comment) {
  */
 function initMap() {
   const map = new google.maps.Map(
-      document.getElementById('map'),
-      {center: {lat: 13.4487378, lng: -16.720855}, zoom: 2});
+    document.getElementById('map'),
+    {center: {lat: 13.4487378, lng: -16.720855}, zoom: 2});
 
   addMarkers(map);
 }
