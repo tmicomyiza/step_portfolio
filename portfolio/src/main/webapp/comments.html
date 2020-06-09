@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <meta charset="UTF-8">
+    <title>Image Gallery</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <div id="content-container">
+      <div class="topnav">
+        <a class="active" href="index.html">Home</a>
+        <a href="images.html">Gallery</a>
+        <a href="quiz.html">Quiz about me</a>
+			</div>
+			<div class="image-thumbnails">
+				<a href="images/astronomy-painting.jpg"><img src="images/astronomy-painting.jpg"/></a>
+				<a href="images/love-painting.jpg"><img src="images/love-painting.jpg"/></a>
+				<a href="images/fruit-painting.jpg"><img src="images/fruit-painting.jpg"/></a>
+			</div>
+			<div id="content">
+				<!-- post comments -->
+        <form action="/data" method="POST" id="post-comments">
+          <p><strong> What's your favorite painting from the Gallery above? and why?</strong></p>        
+          <textarea name="text-input"></textarea>
+          <br/><br/>
+					<button>Post comment</button>
+        </form><br/><br/>
+			</div>
+		</div>
+	</body>
+	</html>

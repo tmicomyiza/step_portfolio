@@ -52,19 +52,14 @@
           <h4>Comments</h4> 
           <!-- load comments -->
           <form action="/data" method="POST">
-            <h5>How many comments you want to see?</h5>
+            <h5>How many comments do you want to see?</h5>
             <input type="number" name="user-choice" min="1" max="50" value="10">
             <br/><br/>
             <button>load comments</button>
           </form>
           <ul id="comment-container"></ul>
-          <!-- post comments -->
-          <form action="/data" method="POST">
-            <p><strong> What's your favorite painting from the Gallery above? and why?</strong></p>        
-            <textarea name="text-input"></textarea>
-            <br/><br/>
-            <button>Post comment</button>
-          </form><br/><br/>
+          <a href="/login">Comment</a><br/><br/>
+          <a href="/logout">Logout</a><br/><br/>
         </div>
       </div><br/><br/>
     </div><br/><br/>

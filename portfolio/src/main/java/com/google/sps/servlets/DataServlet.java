@@ -14,6 +14,8 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -41,6 +43,8 @@ public class DataServlet extends HttpServlet {
   private int userChoice;
   public static String propertyKey = "text";
   public static String entityKey = "Comment";
+  public static String emailKey  = "email";
+  public static String timeKey  = "timestamp";
   
   @Override
   public void init() {
@@ -60,7 +64,8 @@ public class DataServlet extends HttpServlet {
     for (Entity entity : results.asIterable()) {
       if (count > 0) {
         String text = (String) entity.getProperty(propertyKey);
-        comments.add(text);
+        String userEmail = (String) entity.getProperty(emailKey);
+        comments.add(userEmail + ": " + text);
       } else {
         break;
       }
@@ -81,8 +86,13 @@ public class DataServlet extends HttpServlet {
     userChoice = getUserChoice(request);
 
     if (!text.isEmpty()){
+      // Get user's email
+      UserService userService = UserServiceFactory.getUserService();
+      String userEmail = userService.getCurrentUser().getEmail();
       Entity commentEntity = new Entity(entityKey);
       commentEntity.setProperty(propertyKey, text);
+      commentEntity.setProperty(emailKey, userEmail);
+      commentEntity.setProperty(timeKey, System.currentTimeMillis());
 
       // Store the input to datastore.
       DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
