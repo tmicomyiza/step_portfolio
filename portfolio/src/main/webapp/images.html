@@ -22,32 +22,59 @@
           <a href="images/fruit-painting.jpg"><img src="images/fruit-painting.jpg"/></a>
         </div>
         <h3>“On Canvas”</h3>
-        <p>
-          I become a part of everything I create, and
-          <br>Everything I create becomes a part of me.
-        </p>
-        <p>
-          When I cannot identify myself through words
-          <br>I always have to put my ideas down on canvas.
-          <br>Anyone can speak words that will be forgotten but
-          <br>I cannot forget how I feel when seeing my paintings.
-        </p>
-        <p>
-          When I do use words, their core pours out over my pieces
-          <br>where the deepest of meanings can tell a story from only one word.
-        </p>
-        <p>
-          A title,
-          <br>as important as the shade of color I create,
-          <br>type of brush I use,
-          <br>and rhythm I feel when I paint,
-          <br>an identifier as important as choosing to follow my passion
-        </p>
+        <div id="poem">
+          <p id="p1">
+            I become a part of everything I create, and
+            <br>Everything I create becomes a part of me.
+          </p>
+          <p id="p2">
+            When I cannot identify myself through words
+            <br>I always have to put my ideas down on canvas.
+            <br>Anyone can speak words that will be forgotten but
+            <br>I cannot forget how I feel when seeing my paintings.
+          </p>
+          <p id="p3">
+            When I do use words, their core pours out over my pieces
+            <br>where the deepest of meanings can tell a story from only one word.
+          </p>
+          <p id="p4">
+            A title,
+            <br>as important as the shade of color I create,
+            <br>type of brush I use,
+            <br>and rhythm I feel when I paint,
+            <br>an identifier as important as choosing to follow my passion
+          </p>
 
-        <h4>Note:</h4>
-        <p>I wrote this poem to express my love for painting as art form.
-              More importantly, I explain why I give a title to every painting I create.
-        </p>
+          <h4 id="p5">Note:</h4>
+          <p id="p6">I wrote this poem to express my love for painting as art form.
+            More importantly, I explain why I give a title to every painting I create.
+          </p>
+        </div>
+        <div>
+          <!-- translate poem -->
+          <select id="language">
+            <option value="rw">Kinyarwanda</option>
+            <option value="sw">Swahili</option>
+            <option value="en">English</option>
+            <option value="zh">Chinese</option>
+            <option value="es">Spanish</option>
+            <option value="hi">Hindi</option>
+            <option value="ar">Arabic</option>
+            <option value="fr">French</option>
+            <option value="it">Italian</option>
+          </select>
+          <button onclick="requestTranslation();">Translate</button>
+        </div>
+        <!-- section that contains the translation -->
+        <div id="result" style="display: none;">
+          <h4>Translation</h4>
+          <p id="t1"></p>
+          <p id="t2"></p>
+          <p id="t3"></p>
+          <p id="t4"></p><br/>
+          <p id="t5"></p>
+          <p id="t6"></p>
+        </div>
         <hr noshade>
         <div class="comments">
           <h4>Comments</h4> 
