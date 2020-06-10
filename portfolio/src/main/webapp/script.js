@@ -163,24 +163,28 @@ function requestTranslation() {
   document.getElementById('result').style.display = "initial";
 
   const numParagraph = 6;
-  for(var i = 1; i <= numParagraph; i++) {
-    const text = document.getElementById('p' + i.toString()).innerText;
-    const languageCode = document.getElementById('language').value;
+  for (var i = 1; i <= numParagraph; i++) {
+    try {
+      const text = document.getElementById('p' + i.toString()).innerText;
+      const languageCode = document.getElementById('language').value;
 
-    // Display loading.. while the user waits for the translation.
-    const resultContainer = document.getElementById('t' + i.toString());
-    resultContainer.innerText = 'Loading...';
+      // Display loading.. while the user waits for the translation.
+      const resultContainer = document.getElementById('t' + i.toString());
+      resultContainer.innerText = 'Loading...';
 
-    const params = new URLSearchParams();
-    params.append('text', text);
-    params.append('languageCode', languageCode);
+      const params = new URLSearchParams();
+      params.append('text', text);
+      params.append('languageCode', languageCode);
 
-    fetch('/translates', {
-      method: 'POST',
-      body: params
-    }).then(response => response.text())
-    .then((translatedMessage) => {
-      resultContainer.innerText = translatedMessage;
-    });
+      fetch('/translates', {
+        method: 'POST',
+        body: params
+      }).then(response => response.text())
+      .then((translatedMessage) => {
+        resultContainer.innerText = translatedMessage;
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
