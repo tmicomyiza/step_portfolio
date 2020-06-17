@@ -15,9 +15,115 @@
 package com.google.sps;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Set;
+import java.util.HashSet;
 
 public final class FindMeetingQuery {
+
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    throw new UnsupportedOperationException("TODO: Implement this method.");
+    // Stores all possible meeting time slots.
+    ArrayList<TimeRange> results = new ArrayList<>();
+     //results = new ArrayList<>();
+
+    // Duration of request should be not greater than whole day.
+    // Otherwise, there is no possible option.
+    if (request.getDuration() > TimeRange.WHOLE_DAY.duration()) {
+      return results;
+    }
+
+    // No attendees available.
+    if (request.getAttendees().isEmpty()) {
+      //results = Arrays.asList(TimeRange.WHOLE_DAY);
+      results.add(TimeRange.WHOLE_DAY);
+      return results;
+    }
+    
+    // No conflict because no other event is scheduled.
+    if (events.isEmpty()) {
+      //results = Arrays.asList(TimeRange.WHOLE_DAY);
+      results.add(TimeRange.WHOLE_DAY);
+      return results;
+    }
+
+    // Find all occupied time by other events.
+    ArrayList<TimeRange> allOccupiedTime = occupiedTimes(events);
+
+    return results = allFreeTime(mergeOverlappingRanges(allOccupiedTime), request);
+  }
+
+  /**
+   * Connect all time that overlap.
+   *  
+  */
+  private static ArrayList<TimeRange> mergeOverlappingRanges (ArrayList<TimeRange> timeRanges)  {
+    // Sort the time ranges by start time.
+    Collections.sort(timeRanges, TimeRange.ORDER_BY_START);
+    
+    ArrayList<TimeRange> sortedTimeRanges = new ArrayList<>();
+    //int length = sortedTimeRanges.size();
+
+    for (TimeRange currentTime : timeRanges){
+      // No overlap or the its the first element we are evaluating.
+      if (sortedTimeRanges.isEmpty() || !currentTime.overlaps(sortedTimeRanges.get(sortedTimeRanges.size() - 1))) {
+        sortedTimeRanges.add(currentTime);
+
+      } else {
+        // Create a new range that contains both ranges.
+        TimeRange lastTime = sortedTimeRanges.get(sortedTimeRanges.size() - 1);
+        int start = Math.min(lastTime.start(), currentTime.start());
+        int end = Math.max (lastTime.end(), currentTime.end());
+
+        TimeRange newTimeRange = TimeRange.fromStartEnd(start, end, false);
+
+        sortedTimeRanges.remove(lastTime);
+        sortedTimeRanges.add(newTimeRange);
+      }
+    }
+
+    return sortedTimeRanges;
+  }
+
+  /**
+   * Retrieve all occupied time by other events.
+   * 
+  */
+  private static ArrayList<TimeRange> occupiedTimes (Collection<Event> events) {
+    ArrayList<TimeRange> currentOccupiedSpots = new ArrayList<>();
+
+    for (Event event : events){
+      currentOccupiedSpots.add(event.getWhen());
+    }
+
+    return currentOccupiedSpots;
+  }
+
+  /**
+   * Retrieve all available time given the list of time occupied by other events.
+   *  
+  */
+  private static ArrayList<TimeRange> allFreeTime (ArrayList<TimeRange> allOccupiedTime, MeetingRequest request) {
+    ArrayList<TimeRange> freeTimes = new ArrayList<>();
+    TimeRange possibleTime;
+    int prevEndTime = TimeRange.START_OF_DAY;
+
+    for (TimeRange currentTime : allOccupiedTime) {
+      possibleTime = TimeRange.fromStartEnd(prevEndTime, currentTime.start(), false);
+
+      if (possibleTime.duration() >= request.getDuration()) {
+        freeTimes.add(possibleTime);
+      }
+
+      prevEndTime = currentTime.end();
+    }
+
+    // The loop will not evaluate whether there's an open time after last occupied time.
+    possibleTime = TimeRange.fromStartEnd(prevEndTime, TimeRange.END_OF_DAY, true);
+    if (possibleTime.duration() >= request.getDuration()) {
+      freeTimes.add(possibleTime);
+    }
+    return freeTimes;
   }
 }

@@ -136,10 +136,16 @@ function addMarkers(map) {
     title: 'Burundi'
   });
 
-  const mexicoMarker = new google.maps.Marker({
+  const cancunMarker = new google.maps.Marker({
     position: {lat: 21.1216059, lng: -86.9889769},
     map: map,
     title: 'Cancún, Quintana Roo, Mexico'
+  });
+
+  const mexicoMarker = new google.maps.Marker({
+    position: {lat: 19.3910038, lng: -99.2836948},
+    map: map,
+    title: 'Mexico City, CDMX, Mexico'
   });
 
   const phillyMarker = new google.maps.Marker({
