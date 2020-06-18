@@ -26,7 +26,6 @@ public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     // Stores all possible meeting time slots.
     ArrayList<TimeRange> results = new ArrayList<>();
-     //results = new ArrayList<>();
 
     // Duration of request should be not greater than whole day.
     // Otherwise, there is no possible option.
@@ -36,22 +35,35 @@ public final class FindMeetingQuery {
 
     // No attendees available.
     if (request.getAttendees().isEmpty()) {
-      //results = Arrays.asList(TimeRange.WHOLE_DAY);
       results.add(TimeRange.WHOLE_DAY);
       return results;
     }
     
     // No conflict because no other event is scheduled.
     if (events.isEmpty()) {
-      //results = Arrays.asList(TimeRange.WHOLE_DAY);
       results.add(TimeRange.WHOLE_DAY);
       return results;
     }
 
     // Find all occupied time by other events.
-    ArrayList<TimeRange> allOccupiedTime = occupiedTimes(events);
+    ArrayList<TimeRange> allOccupiedTime = occupiedTimes(events, request);
+
 
     return results = allFreeTime(mergeOverlappingRanges(allOccupiedTime), request);
+  }
+
+
+  /**
+   * Evaluates whether there's an attendee who will attend an existing event and 
+   *  will attended the requested meeting.
+  */
+  private static boolean attendanceConflict (Event existingEvent, MeetingRequest request) {
+    Set<String> existingEventAttendees = new HashSet<>(existingEvent.getAttendees());
+
+    // Evaluates whether there's an intersection between the sets of attendees.
+    existingEventAttendees.retainAll(request.getAttendees());
+
+    return !existingEventAttendees.isEmpty();
   }
 
   /**
@@ -90,11 +102,15 @@ public final class FindMeetingQuery {
    * Retrieve all occupied time by other events.
    * 
   */
-  private static ArrayList<TimeRange> occupiedTimes (Collection<Event> events) {
+  private static ArrayList<TimeRange> occupiedTimes (Collection<Event> events, MeetingRequest request) {
     ArrayList<TimeRange> currentOccupiedSpots = new ArrayList<>();
 
     for (Event event : events){
-      currentOccupiedSpots.add(event.getWhen());
+      // In case event has no attendees conflict with requested meeting,
+      // Then it's timeRange is considered unoccupied.
+      if (attendanceConflict(event, request)) {
+        currentOccupiedSpots.add(event.getWhen());
+      }
     }
 
     return currentOccupiedSpots;
@@ -115,15 +131,16 @@ public final class FindMeetingQuery {
       if (possibleTime.duration() >= request.getDuration()) {
         freeTimes.add(possibleTime);
       }
-
       prevEndTime = currentTime.end();
     }
 
-    // The loop will not evaluate whether there's an open time after last occupied time.
+    // Evaluate whether there's an open time after last occupied time.
     possibleTime = TimeRange.fromStartEnd(prevEndTime, TimeRange.END_OF_DAY, true);
     if (possibleTime.duration() >= request.getDuration()) {
       freeTimes.add(possibleTime);
     }
+
     return freeTimes;
   }
+
 }
