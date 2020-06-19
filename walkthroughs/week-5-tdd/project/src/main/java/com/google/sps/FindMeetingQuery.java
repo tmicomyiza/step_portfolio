@@ -48,10 +48,8 @@ public final class FindMeetingQuery {
     // Find all occupied time by other events.
     ArrayList<TimeRange> allOccupiedTime = occupiedTimes(events, request);
 
-
-    return results = allFreeTime(mergeOverlappingRanges(allOccupiedTime), request);
+    return results = findAllFreeTimeRange(mergeOverlappingRanges(allOccupiedTime), request);
   }
-
 
   /**
    * Evaluates whether there's an attendee who will attend an existing event and 
@@ -120,7 +118,7 @@ public final class FindMeetingQuery {
    * Retrieve all available time given the list of time occupied by other events.
    *  
   */
-  private static ArrayList<TimeRange> allFreeTime (ArrayList<TimeRange> allOccupiedTime, MeetingRequest request) {
+  private static ArrayList<TimeRange> findAllFreeTimeRange (ArrayList<TimeRange> allOccupiedTime, MeetingRequest request) {
     ArrayList<TimeRange> freeTimes = new ArrayList<>();
     TimeRange possibleTime;
     int prevEndTime = TimeRange.START_OF_DAY;
@@ -142,5 +140,4 @@ public final class FindMeetingQuery {
 
     return freeTimes;
   }
-
 }
