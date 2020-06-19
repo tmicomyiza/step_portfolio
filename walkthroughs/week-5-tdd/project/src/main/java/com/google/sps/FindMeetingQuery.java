@@ -38,6 +38,7 @@ public final class FindMeetingQuery {
       results.add(TimeRange.WHOLE_DAY);
       return results;
     } else if (request.getAttendees().isEmpty() && !request.getOptionalAttendees().isEmpty()) {
+      // Update request to consider optional attendees since there's no mandatory attendees.
       request = new MeetingRequest(request.getOptionalAttendees(), request.getDuration());
     }
     
@@ -50,7 +51,61 @@ public final class FindMeetingQuery {
     // Find all occupied time by other events.
     ArrayList<TimeRange> allOccupiedTime = occupiedTimes(events, request);
 
-    return results = findAllFreeTimeRange(mergeOverlappingRanges(allOccupiedTime), request);
+    // Find possible TimeRange without considering optional attendees.
+    results = findAllFreeTimeRange(mergeOverlappingRanges(allOccupiedTime), request);
+
+    // Generate final response having considered optional attendees.
+    if(request.getOptionalAttendees().isEmpty()){
+      return results;
+    } else {
+      Collection<TimeRange> new_results = findTimeRangeConsideringOptionalAttendees(events, request, results);
+      if (!new_results.isEmpty()) {
+        return new_results;
+      } else {
+        return results;
+      }
+    }
+  }
+
+  /**
+   * Handle the case where there's optional attendees that should be considered.
+  */
+  private Collection<TimeRange> findTimeRangeConsideringOptionalAttendees (Collection<Event> events, MeetingRequest request, ArrayList<TimeRange> oldResults) {
+    // When there are more than one possible TimeRange, we can go ahead and consider the optional attendees.
+    if (oldResults.size() > 1) {
+      ArrayList<String> newListOfAttendees = new ArrayList<>();
+
+      newListOfAttendees.addAll(request.getAttendees());
+      // add optional attendees to the list
+      newListOfAttendees.addAll(request.getOptionalAttendees());
+      MeetingRequest new_request = new MeetingRequest(newListOfAttendees, request.getDuration());
+      Collection<TimeRange> considerOptionalAttendees = query(events, new_request);
+
+      return considerOptionalAttendees;
+    } else {
+      // When there is only one Possible TimeRange we need to make sure that the new TimeRange
+      // still needs to fitthe meeting duration.
+      for (TimeRange currentTime : oldResults) {
+        // Find length of the current TimeRange.
+        int length = (currentTime.end() - currentTime.start());
+        if (length > request.getDuration()){
+          ArrayList<String> newListOfAttendees = new ArrayList<>();
+
+          // Add mandatory attendees to the list.
+          newListOfAttendees.addAll(request.getAttendees());
+
+          // Add optional attendees to the list.
+          newListOfAttendees.addAll(request.getOptionalAttendees());
+
+          // Adjust the request to contain optional attendees as mandatory attendees.
+          MeetingRequest new_request = new MeetingRequest(newListOfAttendees, request.getDuration());
+          Collection<TimeRange> considerOptionalAttendees = query(events, new_request);
+          return considerOptionalAttendees;
+        }
+      }
+    }
+
+    return oldResults;
   }
 
   /**
