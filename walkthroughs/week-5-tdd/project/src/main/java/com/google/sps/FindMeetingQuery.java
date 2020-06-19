@@ -34,9 +34,11 @@ public final class FindMeetingQuery {
     }
 
     // No attendees available.
-    if (request.getAttendees().isEmpty()) {
+    if (request.getAttendees().isEmpty() && request.getOptionalAttendees().isEmpty()) {
       results.add(TimeRange.WHOLE_DAY);
       return results;
+    } else if (request.getAttendees().isEmpty() && !request.getOptionalAttendees().isEmpty()) {
+      request = new MeetingRequest(request.getOptionalAttendees(), request.getDuration());
     }
     
     // No conflict because no other event is scheduled.
